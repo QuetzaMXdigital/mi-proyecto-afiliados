@@ -1,12 +1,12 @@
 "use client"
 import { Radar, RadarChart as RechartsRadar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
-export default function RadarChart({ puntajes }) {
+export default function RadarChart({ puntajes }: { puntajes: Record<string, number> }) {
   // Convertimos tu JSON de Supabase en el formato que pide la gráfica
   const data = Object.keys(puntajes).map(key => ({
     categoria: key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' '),
     puntos: puntajes[key],
-    fullMark: 10, // El puntaje máximo siempre es 10
+    fullMark: 10,
   }));
 
   return (
