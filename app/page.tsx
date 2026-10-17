@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import RadarChart from './RadarChart'
 
-export const dynamic = 'force-dynamic';
+export const instant = false;
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
