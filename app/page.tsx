@@ -1,18 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
-import RadarChart from './RadarChart' // Importamos tu nueva gráfica
-
-import { createClient } from '@supabase/supabase-js'
 import RadarChart from './RadarChart'
 
-export const dynamic = 'force-dynamic'; // <-- AGREGA ESTA LÍNEA
+export const dynamic = 'force-dynamic';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
-
-export default async function Home() {
-// ... el resto de tu código sigue exactamente igual ...
 
 export default async function Home() {
   const { data: productos, error } = await supabase.from('productos').select('*')
@@ -45,7 +39,6 @@ export default async function Home() {
                   </div>
                 </div>
 
-                {/* AQUÍ INYECTAMOS LA GRÁFICA DINÁMICA */}
                 {producto.puntajes_radar && (
                   <RadarChart puntajes={producto.puntajes_radar} />
                 )}
