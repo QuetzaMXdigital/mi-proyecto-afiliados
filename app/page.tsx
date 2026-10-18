@@ -3,7 +3,7 @@ import RadarChart from './RadarChart'
 
 export const instant = false;
 
-// Blindaje de llaves para evitar que Vercel falle en la compilación
+// Blindaje de llaves
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ejemplo.supabase.co';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'llave-falsa';
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -14,74 +14,80 @@ export default async function Home() {
   if (error) console.error('Error cargando la base de datos:', error)
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    // Fondo Cyber Minimal: Gris perla muy limpio
+    <main className="min-h-screen bg-[#F8FAFC] py-16 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-800">
       <div className="max-w-4xl mx-auto">
         
-        {/* Cabecera Estilo Bento */}
-        <header className="mb-12 text-center bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
-            Cazador de Ofertas: Smart Home 2026
+        {/* Cabecera Premium */}
+        <header className="mb-16 text-center">
+          <div className="inline-block mb-4 px-4 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
+            <span className="text-sm font-bold text-slate-600 tracking-wider uppercase">🎄 Especial Navidad 2026</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
+            Guía Smart Home
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Los mejores gadgets para regalar o automatizar tu casa esta Navidad, analizados y con el precio más bajo garantizado.
+          <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+            Los 3 gadgets esenciales para automatizar tu casa. Precios rastreados y actualizados al instante.
           </p>
         </header>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           {productos && productos.length > 0 ? (
             productos.map((producto) => (
-              <article key={producto.id} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
-                <div className="p-6 sm:p-8">
+              <article key={producto.id} className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+                <div className="p-8 sm:p-10">
                   
-                  {/* Título de la Tarjeta */}
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                  {/* Encabezado de Tarjeta (Negro Mate) */}
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900">{producto.nombre}</h2>
-                      <span className="inline-block mt-2 bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wide">
+                      <h2 className="text-3xl font-bold text-slate-900 leading-tight">{producto.nombre}</h2>
+                      <span className="inline-block mt-3 bg-slate-100 text-slate-600 text-xs px-3 py-1.5 rounded-md font-bold uppercase tracking-widest">
                         {producto.categoria}
                       </span>
                     </div>
-                    <div className="flex-shrink-0 bg-emerald-50 text-emerald-700 font-bold px-4 py-2 rounded-full text-sm flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>
-                      Recomendado
+                    <div className="flex-shrink-0 bg-slate-900 text-white font-semibold px-4 py-2 rounded-full text-sm flex items-center gap-2 shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                      Top Ventas
                     </div>
                   </div>
 
-                  {/* Contenedor Bento: Gráfica + Pros/Contras */}
-                  <div className="grid lg:grid-cols-2 gap-8 items-center mb-8">
+                  {/* Estructura Dual: Gráfica + Pros/Contras */}
+                  <div className="grid lg:grid-cols-2 gap-10 items-center mb-10">
                     
-                    {/* Gráfica de Radar */}
-                    <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                    {/* Gráfica Minimalista */}
+                    <div className="bg-slate-50/50 rounded-3xl p-6 border border-slate-100">
                       {producto.puntajes_radar && (
                         <RadarChart puntajes={producto.puntajes_radar} />
                       )}
                     </div>
 
-                    {/* Pros y Contras */}
-                    <div className="space-y-4">
-                      <div className="bg-green-50/50 rounded-2xl p-5 border border-green-100">
-                        <h3 className="text-green-800 font-bold flex items-center gap-2 mb-3">
-                          <span className="text-xl">👍</span> Lo mejor
+                    {/* Pros y Contras Sofisticados */}
+                    <div className="space-y-5">
+                      <div className="rounded-2xl p-6 border border-slate-100 bg-white shadow-sm">
+                        <h3 className="text-slate-900 font-extrabold flex items-center gap-3 mb-4 uppercase tracking-wide text-sm">
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-lg">✓</span> 
+                          Por qué comprarlo
                         </h3>
-                        <ul className="text-gray-700 space-y-2 text-sm">
+                        <ul className="text-slate-600 space-y-3 text-sm font-medium">
                           {producto.pros ? producto.pros.map((pro: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-green-500 mt-0.5">•</span>
-                              <span>{pro}</span>
+                            <li key={i} className="flex items-start gap-3">
+                              <span className="text-slate-300 mt-1">●</span>
+                              <span className="leading-relaxed">{pro}</span>
                             </li>
                           )) : <li>Sin datos</li>}
                         </ul>
                       </div>
                       
-                      <div className="bg-red-50/50 rounded-2xl p-5 border border-red-100">
-                        <h3 className="text-red-800 font-bold flex items-center gap-2 mb-3">
-                          <span className="text-xl">👎</span> Lo peor
+                      <div className="rounded-2xl p-6 border border-slate-100 bg-white shadow-sm">
+                        <h3 className="text-slate-900 font-extrabold flex items-center gap-3 mb-4 uppercase tracking-wide text-sm">
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-100 text-red-500 text-lg">✕</span> 
+                          A considerar
                         </h3>
-                        <ul className="text-gray-700 space-y-2 text-sm">
+                        <ul className="text-slate-600 space-y-3 text-sm font-medium">
                           {producto.contras ? producto.contras.map((contra: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-red-500 mt-0.5">•</span>
-                              <span>{contra}</span>
+                            <li key={i} className="flex items-start gap-3">
+                              <span className="text-slate-300 mt-1">●</span>
+                              <span className="leading-relaxed">{contra}</span>
                             </li>
                           )) : <li>Sin datos</li>}
                         </ul>
@@ -90,23 +96,25 @@ export default async function Home() {
 
                   </div>
                   
-                  {/* Zona de Conversión (Botones Bento) */}
-                  <div className="pt-6 border-t border-gray-100">
-                    <p className="text-center text-sm font-medium text-gray-500 mb-4 uppercase tracking-wider">Consultar precio actual</p>
+                  {/* Botones de Alta Conversión */}
+                  <div className="pt-8 border-t border-slate-100">
+                    <p className="text-center text-xs font-bold text-slate-400 mb-5 uppercase tracking-widest">
+                      Compara precios en vivo
+                    </p>
                     <div className="flex flex-col sm:flex-row gap-4">
                       <a 
                         href={producto.link_amazon || '#'} 
                         target="_blank"
-                        className="flex-1 flex justify-center items-center gap-2 bg-[#232F3E] text-white py-4 px-6 rounded-2xl font-bold hover:bg-[#131A22] transition-colors shadow-sm"
+                        className="flex-1 flex justify-center items-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
                       >
-                        Amazon: ${producto.precio_habitual || 'Ver oferta'}
+                        Amazon: ${producto.precio_habitual || 'Ver'}
                       </a>
                       <a 
                         href={producto.link_meli || '#'} 
                         target="_blank"
-                        className="flex-1 flex justify-center items-center gap-2 bg-[#FFE600] text-[#2D3277] py-4 px-6 rounded-2xl font-bold hover:bg-[#F2DA00] transition-colors shadow-sm"
+                        className="flex-1 flex justify-center items-center gap-2 bg-[#FFE600] text-[#2D3277] py-4 px-6 rounded-2xl font-bold hover:bg-[#F2DA00] transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
                       >
-                        Ver en Mercado Libre
+                        Mercado Libre
                       </a>
                     </div>
                   </div>
@@ -115,8 +123,8 @@ export default async function Home() {
               </article>
             ))
           ) : (
-            <div className="text-center bg-white p-12 rounded-3xl shadow-sm border border-gray-100">
-              <p className="text-gray-500 text-lg">No hay productos en la base de datos.</p>
+            <div className="text-center bg-white p-16 rounded-[2rem] shadow-sm border border-slate-100">
+              <p className="text-slate-500 text-lg font-medium">Buscando las mejores ofertas...</p>
             </div>
           )}
         </div>
