@@ -1,134 +1,64 @@
-import { createClient } from '@supabase/supabase-js'
-import RadarChart from './RadarChart'
+import Image from 'next/image';
+import Link from 'next/link';
 
-export const instant = false;
-
-// Blindaje de llaves
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ejemplo.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'llave-falsa';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-export default async function Home() {
-  const { data: productos, error } = await supabase.from('productos').select('*')
-
-  if (error) console.error('Error cargando la base de datos:', error)
-
+export default function Home() {
   return (
-    // Fondo Cyber Minimal: Gris perla muy limpio
-    <main className="min-h-screen bg-[#F8FAFC] py-16 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-800">
-      <div className="max-w-4xl mx-auto">
-        
-        {/* Cabecera Premium */}
-        <header className="mb-16 text-center">
-          <div className="inline-block mb-4 px-4 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
-            <span className="text-sm font-bold text-slate-600 tracking-wider uppercase">🎄 Especial Navidad 2026</span>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
-            Guía Smart Home
-          </h1>
-          <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
-            Los 3 gadgets esenciales para automatizar tu casa. Precios rastreados y actualizados al instante.
-          </p>
-        </header>
-
-        <div className="space-y-10">
-          {productos && productos.length > 0 ? (
-            productos.map((producto) => (
-              <article key={producto.id} className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-                <div className="p-8 sm:p-10">
-                  
-                  {/* Encabezado de Tarjeta (Negro Mate) */}
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
-                    <div>
-                      <h2 className="text-3xl font-bold text-slate-900 leading-tight">{producto.nombre}</h2>
-                      <span className="inline-block mt-3 bg-slate-100 text-slate-600 text-xs px-3 py-1.5 rounded-md font-bold uppercase tracking-widest">
-                        {producto.categoria}
-                      </span>
-                    </div>
-                    <div className="flex-shrink-0 bg-slate-900 text-white font-semibold px-4 py-2 rounded-full text-sm flex items-center gap-2 shadow-sm">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                      Top Ventas
-                    </div>
-                  </div>
-
-                  {/* Estructura Dual: Gráfica + Pros/Contras */}
-                  <div className="grid lg:grid-cols-2 gap-10 items-center mb-10">
-                    
-                    {/* Gráfica Minimalista */}
-                    <div className="bg-slate-50/50 rounded-3xl p-6 border border-slate-100">
-                      {producto.puntajes_radar && (
-                        <RadarChart puntajes={producto.puntajes_radar} />
-                      )}
-                    </div>
-
-                    {/* Pros y Contras Sofisticados */}
-                    <div className="space-y-5">
-                      <div className="rounded-2xl p-6 border border-slate-100 bg-white shadow-sm">
-                        <h3 className="text-slate-900 font-extrabold flex items-center gap-3 mb-4 uppercase tracking-wide text-sm">
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-lg">✓</span> 
-                          Por qué comprarlo
-                        </h3>
-                        <ul className="text-slate-600 space-y-3 text-sm font-medium">
-                          {producto.pros ? producto.pros.map((pro: string, i: number) => (
-                            <li key={i} className="flex items-start gap-3">
-                              <span className="text-slate-300 mt-1">●</span>
-                              <span className="leading-relaxed">{pro}</span>
-                            </li>
-                          )) : <li>Sin datos</li>}
-                        </ul>
-                      </div>
-                      
-                      <div className="rounded-2xl p-6 border border-slate-100 bg-white shadow-sm">
-                        <h3 className="text-slate-900 font-extrabold flex items-center gap-3 mb-4 uppercase tracking-wide text-sm">
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-100 text-red-500 text-lg">✕</span> 
-                          A considerar
-                        </h3>
-                        <ul className="text-slate-600 space-y-3 text-sm font-medium">
-                          {producto.contras ? producto.contras.map((contra: string, i: number) => (
-                            <li key={i} className="flex items-start gap-3">
-                              <span className="text-slate-300 mt-1">●</span>
-                              <span className="leading-relaxed">{contra}</span>
-                            </li>
-                          )) : <li>Sin datos</li>}
-                        </ul>
-                      </div>
-                    </div>
-
-                  </div>
-                  
-                  {/* Botones de Alta Conversión */}
-                  <div className="pt-8 border-t border-slate-100">
-                    <p className="text-center text-xs font-bold text-slate-400 mb-5 uppercase tracking-widest">
-                      Compara precios en vivo
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <a 
-                        href={producto.link_amazon || '#'} 
-                        target="_blank"
-                        className="flex-1 flex justify-center items-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
-                      >
-                        Amazon: ${producto.precio_habitual || 'Ver'}
-                      </a>
-                      <a 
-                        href={producto.link_meli || '#'} 
-                        target="_blank"
-                        className="flex-1 flex justify-center items-center gap-2 bg-[#FFE600] text-[#2D3277] py-4 px-6 rounded-2xl font-bold hover:bg-[#F2DA00] transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
-                      >
-                        Mercado Libre
-                      </a>
-                    </div>
-                  </div>
-
-                </div>
-              </article>
-            ))
-          ) : (
-            <div className="text-center bg-white p-16 rounded-[2rem] shadow-sm border border-slate-100">
-              <p className="text-slate-500 text-lg font-medium">Buscando las mejores ofertas...</p>
-            </div>
-          )}
+    <div className="min-h-screen bg-neutral-950 text-neutral-50 font-sans">
+      
+      {/* NAVEGACIÓN */}
+      <header className="border-b border-neutral-900 bg-neutral-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo-quetza.png" 
+              alt="Quetza Shop Logo"
+              width={50}
+              height={50}
+              className="object-contain rounded-xl bg-white p-1"
+            />
+            <span className="text-2xl font-bold tracking-tight hidden sm:block">
+              <span className="text-emerald-500">Quetza</span>
+              <span className="text-quetza-gold">Shop</span>
+            </span>
+          </Link>
+          
+          <nav className="flex gap-6 text-sm font-medium text-neutral-400">
+            <Link href="#radar" className="hover:text-quetza-gold transition-colors">Radar de Precios</Link>
+            <Link href="#smarthome" className="hover:text-quetza-gold transition-colors">Smart Home</Link>
+          </nav>
         </div>
-      </div>
-    </main>
-  )
+      </header>
+
+      {/* PORTADA (HERO SECTION CYBER MINIMAL) */}
+      <main className="max-w-6xl mx-auto px-4 pt-16 pb-16">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-b from-neutral-900 to-neutral-950 border border-neutral-800 p-8 md:p-16 flex flex-col items-center text-center shadow-2xl">
+          
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-40 bg-emerald-900/30 blur-[100px] rounded-full pointer-events-none"></div>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-quetza-gold/10 border border-quetza-gold/20 text-quetza-gold text-xs font-semibold uppercase tracking-wider mb-8 z-10">
+            <span className="w-2 h-2 rounded-full bg-quetza-gold animate-pulse"></span>
+            Especial Smart Home Q4
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-balance z-10">
+            Compara, Compra y Ahorra <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-quetza-gold">
+              Smarter.
+            </span>
+          </h1>
+
+          <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mb-10 text-balance z-10">
+            El radar definitivo para encontrar los mejores precios en tecnología para tu hogar inteligente. Analizamos Amazon y Mercado Libre para que tú no tengas que hacerlo.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center z-10">
+            <Link href="#radar" className="px-8 py-4 rounded-xl bg-quetza-gold text-neutral-950 font-bold hover:bg-yellow-500 transition-all hover:scale-105 shadow-[0_0_20px_rgba(197,154,63,0.3)]">
+              Ver Radar de Ofertas
+            </Link>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  );
 }
