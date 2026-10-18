@@ -18,9 +18,11 @@ export default async function Home() {
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-900">
           Setups para Trading 2026
+        <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-900">
+          Cazador de Ofertas: Smart Home 2026
         </h1>
         <p className="text-center text-gray-500 mb-10">
-          Comparamos los mejores precios en tiempo real para tu estación de trabajo.
+          Los mejores gadgets para regalar o automatizar tu casa esta Navidad al precio más bajo.
         </p>
         
         <div className="grid gap-6">
