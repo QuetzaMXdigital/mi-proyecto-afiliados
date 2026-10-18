@@ -17,8 +17,6 @@ export default async function Home() {
     <main className="min-h-screen bg-gray-50 p-10">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-900">
-          Setups para Trading 2026
-        <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-900">
           Cazador de Ofertas: Smart Home 2026
         </h1>
         <p className="text-center text-gray-500 mb-10">
